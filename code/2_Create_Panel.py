@@ -1,5 +1,5 @@
-import pandas as pd
-import numpy as np
+#import pandas as pd
+#import numpy as np
 from common_import import raw_dir, data_dir,tax_dir
 from helper_functions import hh_consumption, prep_product_data, hh_cols, remove_outlier, tax_per_hh, get_ethanol_totals
 
@@ -43,6 +43,6 @@ df_panel = pd.merge(pd.merge(
 	get_ethanol_totals(df), on=ix_cols ,how='left'),
 	df.groupby(ix_cols)[hh_cols].nth(0), on=ix_cols)\
 	.pipe(remove_outlier, al_ub=73, tb_ub=1095)\
-	.pipe(tax_per_hh, fn_cig_taxes, fn_al_taxes)
+	.pipe(tax_per_hh, fn_taxes)
 
 df_panel.to_parquet(fn_panel, compression='snappy')

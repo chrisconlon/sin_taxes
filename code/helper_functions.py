@@ -1,10 +1,9 @@
 import pandas as pd
 import numpy as np
-import pathlib as path
 import re
 import pyarrow.dataset as ds
 from common_import import (oz_l, qt_l, ml_l, l_oz,beer_abv, wine_abv,SSB_tax_rate,
-	 age_map, edu_map, inc_map, race_map,FED_Beer,FED_Wine,FED_Spirits,FED_cigarette,tab_dir,write_tex_table)
+	 age_map, edu_map, inc_map, race_map, FED_Beer, FED_Wine, FED_Spirits, FED_cigarette, tab_dir, write_tex_table)
 
 # Fix the weird capitalization
 rename_dict={'Projection_Factor':'projection_factor',
@@ -177,10 +176,9 @@ def calc_volume(df_purchases):
 
 def hh_consumption(fn_hh, fn_purchases, fn_bins, df_prod, year=2018):
 	# household data
-	hh_data = ds.dataset(fn_hh)\
-		.to_table(filter=ds.field('panel_year') == year)\
-		.to_pandas()\
-		.pipe(clean_hh, fn_bins)
+	hh_data = pd.read_parquet(fn_hh)\
+		.pipe(clean_hh, fn_bins)\
+		[ix_cols + hh_cols]
 
 	#Read in purchase data
 	df_totals = pd.merge(
@@ -196,7 +194,7 @@ def hh_consumption(fn_hh, fn_purchases, fn_bins, df_prod, year=2018):
 		
 	print('Done with purchase data: ',year)
 
-	return pd.merge(df_totals, hh_data[ix_cols + hh_cols], on=ix_cols)
+	return pd.merge(df_totals, hh_data, on=ix_cols)
 
 def remove_outlier(df, al_ub, tb_ub):
 
@@ -239,16 +237,13 @@ def get_ethanol_totals(df):
 	return df_ethanol[['ethanol','price_per_liter']].copy()
 
 #Attach state tax rate
-def tax_per_hh(df, fn_cig_taxes, fn_al_taxes):
+def tax_per_hh(df, fn_taxes):
 	df = df.reset_index()
-	cig_tax = pd.read_parquet(fn_cig_taxes)
-	al_tax = pd.read_parquet(fn_al_taxes)
+	df_tax = pd.read_parquet(fn_taxes)
 
-	df = pd.merge(pd.merge(
-			df,
-			cig_tax, left_on=['fips_state_desc','panel_year'],right_on=['STATE','panel_year']),
-			al_tax, left_on=['fips_state_desc','panel_year'],right_on=['State abbreviation','panel_year'])
-
+	df = pd.merge(df, df_tax, 
+		left_on=['fips_state_desc','panel_year'], 
+		right_on=['States','panel_year'])
 
 	## CC: Where are these calculations coming from -- constants live in common_import.py
 	df['beer_tax'] = df['beer']*(FED_Beer+df['Beer'])
