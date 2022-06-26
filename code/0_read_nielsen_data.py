@@ -10,13 +10,15 @@ from kiltsreader import PanelReader
 
 # modify these
 in_dir = pathlib.Path('/Volumes/T7/nielsen-panelist')
+
+# out files
+fn_out_prods = raw_dir / 'revision_products.parquet'
+fn_out_panelists = raw_dir / 'revision_panelists.parquet'
+
+# save multiple files for purchase data -- to keep things manageable
 out_dir = raw_dir / "purchases"
 out_dir.mkdir(exist_ok=True)
 
-# out files
-fn_out_purchases = raw_dir / 'revision_purchases.parquet'
-fn_out_prods = raw_dir / 'revision_products.parquet'
-fn_out_panelists = raw_dir / 'revision_panelists.parquet'
 
 nr = PanelReader(in_dir)
 nr.filter_years(keep=range(2007, 2020+1))
@@ -32,8 +34,8 @@ nr.df_panelists = nr.df_panelists.drop(columns=['Male_Head_Birth_revised', 'Fema
 
 # Write the data partitioned by panel_year (so we can partially read in later)
 #nr.write_data(raw_dir, stub='revision',as_table=True, separator='panel_year')
-nr.df_products.to_parquet(raw_dir / 'revision_products.parquet', compression='brotli')
-nr.df_panelists.to_parquet(raw_dir / 'revision_panelists.parquet', compression='brotli')
+nr.df_products.to_parquet(fn_out_prods, compression='brotli')
+nr.df_panelists.to_parquet(fn_out_panelists, compression='brotli')
 
 # this is a horror show of memory usage and writing takes forever
 # drop useless fields
