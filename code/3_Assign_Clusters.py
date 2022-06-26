@@ -7,13 +7,9 @@ from scipy.stats import zscore
 from common_import import raw_dir, data_dir
 from cluster_helpers import fit_only, predict_only, fit_all_years, high, medium, low, calc_external_damage
 
-pd.set_option('display.max_columns', None)
-pd.set_option('expand_frame_repr', False)
-pd.set_option('display.max_rows', None)
 
 # Inputs
 fn_panel = data_dir / 'panel_data_all_years.parquet'
-
 
 # Outputs
 fn_clusters = data_dir / 'cluster_data_all_years.parquet'
