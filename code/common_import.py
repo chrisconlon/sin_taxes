@@ -15,7 +15,7 @@ tab_dir = proj_dir / 'tables'
 fig_dir = proj_dir / 'figures'
 tax_dir = proj_dir / 'tax_data'
 
-# Constants
+## Constants
 # .06 fluid oz in L
 # https://www.rethinkingdrinking.niaaa.nih.gov/how-much-is-too-much/what-counts-as-a-drink/whats-a-standard-drink.aspx
 drinks_per_ethanol_L = .0177441177
@@ -31,7 +31,21 @@ beer_abv = 0.045
 liquor_abv = 0.411
 race_map={1:'White',2:'Black',3:'Asian',4:'Other'}
 
-# Can give these text namaes later
+# Tax Rates (2018)
+FED_Beer = 0.58/l_gallon
+FED_Wine = 1.07/l_gallon
+FED_Spirits = 0.8*(13.5/l_gallon) #per proof gallon
+FED_cigarette = 1.0066
+SSB_tax_rate = 0.01
+
+# Default ABV%
+ethanol_in_beer = 0.045
+ethanol_in_wine = 0.129
+ethanol_in_spirits = 0.4
+
+
+# Can give these text names later
+# mapping for nielsen fields to labels
 inc_map={
 	3:'<24,999',4:'<24,999',6:'<24,999',8:'<24,999',10:'<24,999',11:'<24,999',13:'<24,999',
 	15:'25,000 - 44,999',16:'25,000 - 44,999',17:'25,000 - 44,999',18:'25,000 - 44,999',
@@ -57,15 +71,6 @@ edu_map={
 
 cluster_order = ['Everything','Smokers','Heavy Drinkers','Moderate Spirits','Mostly Wine','Moderate Beer','SSB only','Nothing']
 
-FED_Beer = 0.58/l_gallon
-FED_Wine = 1.07/l_gallon
-FED_Spirits = 0.8*(13.5/l_gallon) #per proof gallon
-FED_cigarette = 1.0066
-SSB_tax_rate = 0.01
-
-enthonal_in_beer = 0.045
-enthonal_in_wine = 0.129
-enthonal_in_spirits = 0.4
 
 
 def write_tex_table(tex, f_out):
