@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import re
 import pyarrow.dataset as ds
-from common_import import (oz_l, qt_l, ml_l, l_oz,beer_abv, wine_abv,SSB_tax_rate,
+from common_import import (oz_l, qt_l, ml_l, l_oz,beer_abv, wine_abv, SSB_tax_rate,
 	 age_map, edu_map, inc_map, race_map, FED_Beer, FED_Wine, FED_Spirits, FED_cigarette, tab_dir, write_tex_table)
 
 # Fix the weird capitalization
