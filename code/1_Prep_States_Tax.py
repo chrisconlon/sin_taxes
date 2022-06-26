@@ -4,7 +4,7 @@ import numpy as np
 import pathlib as path
 import re
 from common_import import raw_dir, data_dir, tax_dir, tab_dir
-from common_import import write_tex_table, l_gallon, liters_per_gallon, ethanol_in_beer, ethanol_in_wine, ethanol_in_spirits
+from common_import import write_tex_table, liters_per_gallon, ethanol_in_beer, ethanol_in_wine, ethanol_in_spirits
 
 pd.set_option('display.max_columns', None)
 pd.set_option('expand_frame_repr', False)
