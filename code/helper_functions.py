@@ -237,19 +237,19 @@ def get_ethanol_totals(df):
 #Attach state tax rate
 def tax_per_hh(df, fn_taxes):
 	df = df.reset_index()
-	df_tax = pd.read_parquet(fn_taxes)
+	df_tax = pd.read_parquet(fn_taxes).rename(columns={'Spirits':'Spirits_tax','Beer':'Beer_tax','Wine':'Wine_tax','Cigarettes':'Cigarettes_tax'})
 
 	df = pd.merge(df, df_tax, 
 		left_on=['fips_state_desc','panel_year'], 
-		right_on=['States','panel_year'])
+		right_on=['State','panel_year'])
 
 	## CC: Where are these calculations coming from -- constants live in common_import.py
-	df['beer_tax'] = df['beer']*(FED_Beer+df['Beer'])
-	df['spirits_tax'] = df['liquor']*(FED_Spirits+df['Spirits'])
-	df['wine_tax'] = df['wine']*(FED_Wine+df['Wine'])
-	df['cigarette_tax'] = df['cigars']*(FED_cigarette+df['TAX RATE'])
+	df['beer_tax'] = df['beer']*(FED_Beer+df['Beer_tax'])
+	df['spirits_tax'] = df['liquor']*(FED_Spirits+df['Spirits_tax'])
+	df['wine_tax'] = df['wine']*(FED_Wine+df['Wine_tax'])
+	df['cigarette_tax'] = df['cigars']*(FED_cigarette+df['Cigarettes_tax'])
 	df['ssb_tax'] = df['carbonated']*l_oz*SSB_tax_rate #per ounce
 
 	df['total_tax'] = df['beer_tax']+df['spirits_tax']+df['wine_tax']+df['cigarette_tax']+df['ssb_tax']
 	df['total_tax_but_ssb'] = df['beer_tax']+df['spirits_tax']+df['wine_tax']+df['cigarette_tax']
-	return df.drop(columns=['State name','State abbreviation','Spirits','Beer','Wine','TAX RATE','STATE'])
+	return df.drop(columns=['State','Spirits_tax','Beer_tax','Wine_tax','Cigarettes_tax'])
