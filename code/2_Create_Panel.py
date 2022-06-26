@@ -3,20 +3,15 @@ import numpy as np
 from common_import import raw_dir, data_dir,tax_dir
 from helper_functions import hh_consumption, prep_product_data, hh_cols, remove_outlier, tax_per_hh, get_ethanol_totals
 
-pd.set_option('display.max_columns', None)
-pd.set_option('expand_frame_repr', False)
-pd.set_option('display.max_rows', None)
-
 #  Inputs
 fn_bins =  raw_dir /'nielsen_income_bins.xlsx'
 fn_category = raw_dir / 'category_list.xlsx'
-fn_cig_taxes = tax_dir/'states_cigarettes.parquet'
-fn_al_taxes = tax_dir/'states_alcohol.parquet'
+fn_taxes = data_dir /'states_taxes.parquet'
 
 # Nielsen Data
-fn_hh = raw_dir / 'revision_panelists.parquet'
-fn_purchases = raw_dir /'purchases'
-fn_prod = raw_dir /'revision_products.parquet'
+fn_purchases = data_dir /'purchases'
+fn_hh = data_dir / 'revision_panelists.parquet'
+fn_prod = data_dir /'revision_products.parquet'
 
 # Outputs
 fn_sin_data = data_dir / 'sin_goods_all_years.parquet'

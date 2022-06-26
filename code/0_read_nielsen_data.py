@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import pyarrow.dataset as ds
 import pyarrow as pa
-from common_import import raw_dir 
+from common_import import data_dir 
 from kiltsreader import PanelReader
 
 ## This uses > 100GB of RAM: processing fewer years or categories at once advised on a smaller computer
@@ -12,11 +12,11 @@ from kiltsreader import PanelReader
 in_dir = pathlib.Path('/Volumes/T7/nielsen-panelist')
 
 # out files
-fn_out_prods = raw_dir / 'revision_products.parquet'
-fn_out_panelists = raw_dir / 'revision_panelists.parquet'
+fn_out_prods = data_dir / 'revision_products.parquet'
+fn_out_panelists = data_dir / 'revision_panelists.parquet'
 
 # save multiple files for purchase data -- to keep things manageable
-out_dir = raw_dir / "purchases"
+out_dir = data_dir / "purchases"
 out_dir.mkdir(exist_ok=True)
 
 
@@ -33,7 +33,7 @@ nr.process_open_issues()
 nr.df_panelists = nr.df_panelists.drop(columns=['Male_Head_Birth_revised', 'Female_Head_Birth_revised'])
 
 # Write the data partitioned by panel_year (so we can partially read in later)
-#nr.write_data(raw_dir, stub='revision',as_table=True, separator='panel_year')
+#nr.write_data(data_dir, stub='revision',as_table=True, separator='panel_year')
 nr.df_products.to_parquet(fn_out_prods, compression='brotli')
 nr.df_panelists.to_parquet(fn_out_panelists, compression='brotli')
 
