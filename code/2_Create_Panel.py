@@ -1,5 +1,5 @@
-#import pandas as pd
-#import numpy as np
+import pandas as pd
+import numpy as np
 from common_import import raw_dir, data_dir,tax_dir
 from helper_functions import hh_consumption, prep_product_data, hh_cols, remove_outlier, tax_per_hh, get_ethanol_totals
 
@@ -9,7 +9,7 @@ fn_category = raw_dir / 'category_list.xlsx'
 fn_taxes = data_dir /'states_taxes.parquet'
 
 # Nielsen Data
-fn_purchases = data_dir /'purchases'
+fn_purchases = data_dir /'revision_purchases.parquet'
 fn_hh = data_dir / 'revision_panelists.parquet'
 fn_prod = data_dir /'revision_products.parquet'
 

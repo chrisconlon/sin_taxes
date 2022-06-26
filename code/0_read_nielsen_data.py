@@ -14,6 +14,7 @@ in_dir = pathlib.Path('/Volumes/T7/nielsen-panelist')
 # out files
 fn_out_prods = data_dir / 'revision_products.parquet'
 fn_out_panelists = data_dir / 'revision_panelists.parquet'
+fn_out_purchases = data_dir / 'revision_purchases.parquet'
 
 # save multiple files for purchase data -- to keep things manageable
 out_dir = data_dir / "purchases"
@@ -42,11 +43,12 @@ nr.df_panelists.to_parquet(fn_out_panelists, compression='brotli')
 purch_cols = ['trip_code_uc','household_code','upc','upc_ver_uc','quantity','total_price_paid','panel_year']
 nr.df_purchases = [tab.select(purch_cols) for tab in nr.df_purchases ]
 
+pa.concat_tables(nr.df_purchases).to_pandas().to_parquet(fn_out_purchases, compression='brotli')
 # Save with parquet.dataset format -- this is fast but reading is complicated
 # Would be totally unnecessary except so much data for so many years
-save_schema=nr.df_purchases[0].select(purch_cols).schema
-new_part = ds.partitioning(pa.schema([("panel_year", pa.int16())]), flavor=None)
-write_options = ds.ParquetFileFormat().make_write_options(allow_truncated_timestamps=True)
-ds.write_dataset(nr.df_purchases, base_dir=out_dir, basename_template='purchases{i}.parquet',
-	 format="parquet", schema=save_schema, partitioning=new_part,
-	 existing_data_behavior='delete_matching', file_options=write_options)
+#save_schema=nr.df_purchases[0].select(purch_cols).schema
+#new_part = ds.partitioning(pa.schema([("panel_year", pa.int16())]), flavor=None)
+#write_options = ds.ParquetFileFormat().make_write_options(allow_truncated_timestamps=True)
+#ds.write_dataset(nr.df_purchases, base_dir=out_dir, basename_template='purchases{i}.parquet',
+#	 format="parquet", schema=save_schema, partitioning=new_part,
+#	 existing_data_behavior='delete_matching', file_options=write_options)

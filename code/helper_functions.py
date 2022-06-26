@@ -181,10 +181,8 @@ def hh_consumption(fn_hh, fn_purchases, fn_bins, df_prod, year=2018):
 		[ix_cols + hh_cols]
 
 	#Read in purchase data
-	df_totals = pd.merge(
-		ds.dataset(fn_purchases, partitioning=['panel_year'], format="parquet")\
-		.to_table(columns=purch_cols,filter=ds.field('panel_year') == year)\
-		.to_pandas(),
+	df_totals = pd.merge(pd.read_parquet(fn_purchases,columns=purch_cols)\
+		.query('panel_year == @year')\
 		df_prod,
 		on=['upc', 'upc_ver_uc'])\
 		.pipe(calc_volume)\
