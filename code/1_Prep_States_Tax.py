@@ -3,22 +3,17 @@ import numpy as np
 
 import pathlib as path
 import re
-from common_import import raw_dir, data_dir, tax_dir, l_gallon,write_tex_table,tab_dir
+from common_import import raw_dir, data_dir, tax_dir, tab_dir
+from common_import import write_tex_table, l_gallon, liters_per_gallon, ethanol_in_beer, ethanol_in_wine, ethanol_in_spirits
 
 pd.set_option('display.max_columns', None)
 pd.set_option('expand_frame_repr', False)
 pd.set_option('display.max_rows', None)
 
-
-liters_per_gallon = 3.78541
-ethanol_in_beer = 0.045
-ethanol_in_wine = 0.129
-ethanol_in_spirits = 0.4
-
 fn_cigarette = 'state_cigarette_rates_5.xlsx'
 fn_alcohol = 'state_alcohol_rates.xlsx'
-fn_panel = data_dir / 'panel_data_all_years.parquet'
 
+fn_panel = data_dir / 'panel_data_all_years.parquet'
 
 Region={'Connecticut':'Northeast','Maine':'Northeast','Massachusetts':'Northeast','New Hampshire':'Northeast','Rhode Island':'Northeast','Vermont':'Northeast','New Jersey':'Northeast','New York':'Northeast','Pennsylvania':'Northeast',
 		'Indiana':'Midwest','Illinois':'Midwest','Michigan':'Midwest','Ohio':'Midwest','Wisconsin':'Midwest','Iowa':'Midwest',

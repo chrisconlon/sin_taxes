@@ -23,7 +23,7 @@ drinks_per_ethanol_L = .0177441177
 oz_l = 0.0295735
 qt_l = 0.946353
 ml_l = 0.001
-l_gallon = 3.78541
+liters_per_gallon = 3.78541
 l_oz = 33.814
 
 wine_abv = 0.129
@@ -32,9 +32,9 @@ liquor_abv = 0.411
 race_map={1:'White',2:'Black',3:'Asian',4:'Other'}
 
 # Tax Rates (2018)
-FED_Beer = 0.58/l_gallon
-FED_Wine = 1.07/l_gallon
-FED_Spirits = 0.8*(13.5/l_gallon) #per proof gallon
+FED_Beer = 0.58/liters_per_gallon
+FED_Wine = 1.07/liters_per_gallon
+FED_Spirits = 0.8*(13.5/liters_per_gallon) #per proof gallon
 FED_cigarette = 1.0066
 SSB_tax_rate = 0.01
 
