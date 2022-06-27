@@ -7,6 +7,7 @@ from common_import import data_dir
 from kiltsreader import PanelReader
 
 ## This uses > 100GB of RAM: processing fewer years or categories at once advised on a smaller computer
+# takes only 3-5 min on my iMac --> saving is slow
 
 # modify these
 in_dir = pathlib.Path('/Volumes/T7/nielsen-panelist')
@@ -41,11 +42,13 @@ nr.df_panelists.to_parquet(fn_out_panelists, compression='brotli')
 # this is a horror show of memory usage and writing takes forever
 # drop useless fields
 purch_cols = ['trip_code_uc','household_code','upc','upc_ver_uc','quantity','total_price_paid','panel_year']
-nr.df_purchases = [tab.select(purch_cols) for tab in nr.df_purchases ]
+pa.concat_tables([tab.select(purch_cols) for tab in nr.df_purchases])\
+	.to_pandas()\
+	.to_parquet(fn_out_purchases, compression='brotli')
 
-pa.concat_tables(nr.df_purchases).to_pandas().to_parquet(fn_out_purchases, compression='brotli')
 # Save with parquet.dataset format -- this is fast but reading is complicated
 # Would be totally unnecessary except so much data for so many years
+# Something broke this and it is now unstable (!!)
 #save_schema=nr.df_purchases[0].select(purch_cols).schema
 #new_part = ds.partitioning(pa.schema([("panel_year", pa.int16())]), flavor=None)
 #write_options = ds.ParquetFileFormat().make_write_options(allow_truncated_timestamps=True)
