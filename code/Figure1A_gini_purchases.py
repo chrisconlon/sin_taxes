@@ -40,7 +40,7 @@ plt.rc('xtick', labelsize=24)    # fontsize of the tick labels
 plt.rc('ytick', labelsize=24)    # fontsize of the tick labels
 plt.rc('legend', fontsize=24)    # legend fontsize
 plt.rc('figure', titlesize=24)
-#plt.rc('axes', prop_cycle=cycler(color=['008fd5', 'fc4f30', 'e5ae38', '6d904f', '8b8b8b', '810f7c']))
+plt.rc('axes', prop_cycle=cycler(color=['008fd5', 'fc4f30', 'e5ae38', '6d904f', '8b8b8b', '810f7c']))
 #plt.rc('axes',prop_cycle=cycler(color=['c', 'm', 'y', 'k'], lw=[1, 2, 3, 4]))
 #plt.rc('axes',prop_cycle=cycler(color=['#008fd5', '#fc4f30', '#e5ae38', '#6d904f', '#8b8b8b','purple','navy']))
 plt.rc('lines', linewidth=3)

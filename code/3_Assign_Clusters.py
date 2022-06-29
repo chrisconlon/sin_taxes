@@ -39,7 +39,7 @@ df4['externality_low'] =calc_external_damage(df['ethanol']/df['Adult'],**low)
 df4.to_parquet(fn_clusters)
 
 
-def stable_metric(Y1,Y2,df3):
+def stable_metric(Y1, Y2, df3):
 	new_col_name = 'cluster_'+str(Y2)
 	df4=pd.merge(df3,
 	df3.query('panel_year==@Y2')[['household_code','clusters']]\
@@ -56,8 +56,8 @@ def stable_metric(Y1,Y2,df3):
 	print("Start!")
 
 	x2=pd.crosstab(df4.query('panel_year==@Y1').clusters, df4.query('panel_year==@Y1')[new_col_name])
-	print((100.*x2.div(x2.sum(axis=0),axis=1)).round(2))
-	print((100.*x2.div(x2.sum(axis=1),axis=0)).round(2))
+	print((100.*x2.div(x2.sum(axis=0), axis=1)).round(2))
+	print((100.*x2.div(x2.sum(axis=1), axis=0)).round(2))
 
 # stable_metric(2019,2020,df3)
 
