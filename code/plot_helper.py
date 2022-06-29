@@ -19,7 +19,6 @@ def initialize_plot():
     plt.rc('figure', titlesize=24)
     plt.rc('lines', linewidth=3)
 
-
 def get_colors(use_bw=True):
     if use_bw:
         my_colors = {'carbonated':'0.00','cigars':'0.40','beer':'0.00','wine':'0.60',
