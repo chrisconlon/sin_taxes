@@ -5,9 +5,11 @@ import pathlib as path
 
 from common_import import raw_dir, data_dir,tab_dir,fig_dir,write_tex_table
 
-pd.set_option('display.max_columns', 500)
-pd.set_option('display.max_rows', 500)
-pd.set_option('display.width', 1000)
+# The number of drinks is calculated according to
+# https://pubs.niaaa.nih.gov/publications/practitioner/PocketGuide/pocket guide2.htm where a standard drink is any
+# drink that contains about 14 grams of pure alcohol (about 0.6 fluid ounces or 1.2 tablespoons). 
+#The first column, NIAAA, is based on https://www.washingtonpost.com/news/wonk/wp/2014/09/25/think-you-drink-a-lot-this-chart-will-tell-you/ but we
+# divided numbers by 1.97 to recover original data
 
 df_panel = pd.read_parquet(data_dir/'panel_data_all_years.parquet').query("panel_year==2018")
 
