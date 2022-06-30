@@ -6,9 +6,10 @@ from common_import import data_dir, tab_dir
 from common_import import write_tex_table, liters_per_gallon, ethanol_in_beer, ethanol_in_wine, ethanol_in_spirits
 
 
+
+
 # Inputs
-f_cig_out = data_dir/'states_cigarettes.parquet'
-f_alcohol_out = data_dir / 'states_alcohol.parquet'
+fn_taxes = data_dir/'states_taxes.parquet'
 fn_panel = data_dir / 'panel_data_all_years.parquet'
 
 
@@ -17,15 +18,8 @@ fn_table_out = tab_dir / 'tableB1.tex'
 
 
 # Read in the Tax Info
-df1 = pd.read_parquet(f_alcohol)
-df2 = pd.read_parquet(f_cigarette)
+df_tax = pd.read_parquet(fn_taxes).query('panel_year==2018')
 df = pd.read_parquet(fn_panel)
-
-
-# Merge the tax data
-tax_panel = pd.merge(df1, df2, left_on=['State abbreviation','panel_year'],right_on=['STATE','panel_year'])
-tax_panel = tax_panel[tax_panel['panel_year']==2018][['STATE','Beer','Wine','Spirits','TAX RATE']]
-tax_panel = tax_panel.rename(columns={'Beer':'beer tax','Wine':'wine tax','Spirits':'spirits tax','TAX RATE':'cigarette tax'})
 
 
 # Define a lambda function to compute the weighted mean:
@@ -37,13 +31,13 @@ df =  df.groupby('fips_state_desc')\
 		.agg(weighted_mean=("total_tax_but_ssb", wm))\
 		.reset_index()
 
-fnl = pd.merge(tax_panel, df, left_on='STATE',right_on='fips_state_desc',how='left')\
+fnl = pd.merge(df_tax, df, left_on='State',right_on='fips_state_desc',how='left')\
 		.drop(columns=['fips_state_desc'])
 
-fnl['Beer tax per ethanol/L'] = fnl['beer tax'] /ethanol_in_beer
-fnl['Wine tax per ethanol/L'] = fnl['wine tax'] /ethanol_in_wine
-fnl['Spirits tax per ethanol/L'] = fnl['spirits tax'] /ethanol_in_spirits
-fnl = fnl[['STATE','beer tax','wine tax','spirits tax','cigarette tax','Beer tax per ethanol/L','Wine tax per ethanol/L','Spirits tax per ethanol/L','weighted_mean']]
+fnl['Beer tax per ethanol/L'] = fnl['Beer'] /ethanol_in_beer
+fnl['Wine tax per ethanol/L'] = fnl['Wine'] /ethanol_in_wine
+fnl['Spirits tax per ethanol/L'] = fnl['Spirits'] /ethanol_in_spirits
+fnl = fnl[['State','Beer','Wine','Spirits','Cigarettes','Beer tax per ethanol/L','Wine tax per ethanol/L','Spirits tax per ethanol/L','weighted_mean']]
 # print(fnl.round(2).to_latex(index=False))
 
 # Write the table

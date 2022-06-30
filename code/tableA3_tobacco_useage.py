@@ -4,10 +4,6 @@ import pyreadstat
 import pathlib as path
 from common_import import raw_dir, data_dir,tab_dir,fig_dir,write_tex_table
 
-pd.set_option('display.max_columns', 500)
-pd.set_option('display.max_rows', 500)
-pd.set_option('display.width', 1000)
-
 df_panel = pd.read_parquet(data_dir/'panel_data_all_years.parquet').query("panel_year==2018")
 
 fn_table_out = tab_dir / 'tableA3.tex'
@@ -32,6 +28,8 @@ fn_table_out = tab_dir / 'tableA3.tex'
 temp = df_panel[df_panel.cigars == 0]
 print(temp.shape)
 print(df_panel.shape)
+
+# Convert to Adults per Day
 df_panel['smoking'] = np.round((df_panel['cigars']*20)/365,3)
 df_panel['smoking per capita'] = np.round(((df_panel['cigars']*20)/df_panel['Adult'])/365,3)
 
