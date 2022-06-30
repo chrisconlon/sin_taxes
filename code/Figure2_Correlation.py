@@ -1,34 +1,36 @@
-import seaborn as sns
-from scipy.stats import kendalltau
-from itertools import combinations 
-import pycop
-import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
-from pycop import empirical
-from common_import import data_dir,tab_dir,fig_dir
-#Input
-fn_panel = data_dir / 'panel_data_all_years.parquet'
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-rename_dict={'cigars':'cigarettes','carbonated':'ssb'}
-df = pd.read_parquet(fn_panel).query('panel_year==2018').rename(columns=rename_dict)
+from scipy.stats import kendalltau
+from itertools import combinations 
+from pycop.bivariate import empirical
+from common_import import data_dir, fig_dir
 
-cols=['cigarettes','beer','wine','liquor','ssb','juice','diet','yogurt','toilet_tissue']
+# columns to measure correlation
+#cols=['cigarettes','beer','wine','liquor','ssb','juice','diet','yogurt','toilet_tissue']
 cols=['cigarettes','beer','wine','liquor','ssb','juice','diet']
 
-mask = np.triu(np.ones_like(df[cols].corr()))
+#Input
+fn_panel = data_dir / 'panel_data_all_years.parquet'
 
 def plot_income(df, income_df,title_top, title_bottom):
 	fig, (ax,ax2) = plt.subplots(ncols=2, figsize=(12,8), gridspec_kw={'width_ratios': [8, 1]})
 	fig.subplots_adjust(wspace=0.01)
-	sns.heatmap(df, mask=np.eye(mask.shape[0]), vmin=-1, vmax=1, annot=True,cmap='BrBG',cbar=True, ax = ax)
+	sns.heatmap(df, mask=np.eye(mask.shape[0]), vmin=-.1, vmax=1, annot=True,cmap='Greys',cbar=True, ax = ax)
 	ax.set_yticklabels(ax.get_yticklabels(), rotation = 0)
 	ax.set_title(title_top, fontdict={'fontsize':12}, pad=12)
 	ax.set_xlabel(title_bottom, fontdict={'fontsize':12})
-	ax2=sns.heatmap(income_df, vmin=-1, vmax=1, annot=True,cmap='BrBG', cbar=False, ax = ax2, yticklabels=False)
+	ax2=sns.heatmap(income_df, vmin=-.1, vmax=1, annot=True,cmap='Greys', cbar=False, ax = ax2, yticklabels=False)
 	ax2.set_title('Correlation', fontdict={'fontsize':12}, pad=12)
-    
 
+# Read in data
+df = pd.read_parquet(fn_panel)\
+	.query('panel_year==2018')\
+	.rename(columns={'cigars':'cigarettes','carbonated':'ssb'})
+
+mask = np.triu(np.ones_like(df[cols].corr()))
 
 pearson = df[cols].corr()
 spearman =df[cols].rank(ascending=True,method='min').corr()

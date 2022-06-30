@@ -56,14 +56,13 @@ def add_them_all(df):
 	
 	tb = tb.reset_index().reindex([3,1,0,2,4,5,7,6,12,8,9,10,11,16,13,14,15,17,19,21,18,20])
 
-	tb['index'] = ['Race: White (74.9%)','Race: Black (12.5%)','Race: Asian (4.4%)','Race: Other (8.2%)','Hispanic: No (86.8%)','Hispanic: Yes (13.2%)',
-		'Children: Yes (31.3%)','Children: No (68.7%)',
-	  'Age: $<$ 35 (12.9%)', 'Age: 35 to 44 (18.0%)', 'Age: 45 to 54 (21.8%)', 'Age: 55 to 64 (22.7%)','Age: $>$ 65 (24.6%)',
-	  'Income: $<$ 24,999 (20.4%)','Income: 25,000 - 44,999 (17.7%)',
-	  'Income: 45,000-69,999 (18.2%)','Income: 70,000-99,999 (15.5%)','Income: $>$ 100,000 (28.1%)',
-	  'Edu: High School or less (27.4%)','Edu: Some College (31.4%)','Edu: Graduated College (26.3%)',
-	  'Edu: Post College Grad (14.9%)']
-	
+	tb['index'] = ['Race: White (74.9\%)','Race: Black (12.5\%)','Race: Asian (4.4\%)','Race: Other (8.2\%)','Hispanic: No (86.8\%)','Hispanic: Yes (13.2\%)',
+		'Children: Yes (31.3\%)','Children: No (68.7\%)',
+	  'Age: $<$ 35 (12.9\%)', 'Age: 35 to 44 (18.0\%)', 'Age: 45 to 54 (21.8\%)', 'Age: 55 to 64 (22.7\%)','Age: $>$ 65 (24.6\%)',
+	  'Income: $<$ 24,999 (20.4\%)','Income: 25,000 - 44,999 (17.7\%)',
+	  'Income: 45,000-69,999 (18.2\%)','Income: 70,000-99,999 (15.5\%)','Income: $>$ 100,000 (28.1\%)',
+	  'Edu: High School or less (27.4\%)','Edu: Some College (31.4\%)','Edu: Graduated College (26.3\%)',
+	  'Edu: Post College Grad (14.9\%)']
 
 	return tb.set_index(['index']).drop(columns=['char'])
 
@@ -122,8 +121,14 @@ def style_negative(value):
 # 	return bool_matrix_lw.applymap(lambda x: 'background-color: lightcoral' if x else '')
 	return bool_matrix_lw.applymap(lambda x: 'cellcolor:[HTML]{E4717A}' if x else '')
 
+def style_positive_bw(value):
+	return bool_matrix_up.applymap(lambda x: 'cellcolor:[HTML]{C0C0C0}' if x else '')
 
-rslt_tb = tb.style.format("{:.2f}").apply(style_positive, axis=None).apply(style_negative,axis=None)
+def style_negative_bw(value):
+	return bool_matrix_lw.applymap(lambda x: 'cellcolor:[HTML]{979797}' if x else '')
+
+
+rslt_tb = tb.style.format("{:.2f}").apply(style_positive_bw, axis=None).apply(style_negative_bw,axis=None)
 latex=rslt_tb.to_latex()
 latex_list=latex.splitlines()
 latex_list[2] = 'Baseline probability & 0.025 & 0.055 & 0.067 & 0.071 & 0.070 & 0.094 & 0.440 & 0.178' + ' \\\\'
