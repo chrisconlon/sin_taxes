@@ -6,12 +6,11 @@ from common_import import raw_dir, data_dir,tab_dir,fig_dir,write_tex_table
 
 
 fn_clusters = data_dir / 'cluster_data_all_years.parquet'
-pd.set_option('display.max_columns', 500)
-pd.set_option('display.max_rows', 500)
+fn_table_out = tab_dir/'tableD1.tex'
+
 
 df = pd.read_parquet(fn_clusters)
 
-fn_table_out = tab_dir/'tableD1.tex'
 # Define a lambda function to compute the weighted mean:
 wm = lambda x: np.average(x, weights=df.loc[x.index, "projection_factor"])
 

@@ -3,8 +3,6 @@ import pandas as pd
 import pathlib as path
 import statsmodels.api as sm
 from common_import import data_dir,tab_dir,write_tex_table
-pd.set_option('display.max_columns', 500)
-pd.set_option('display.max_rows', 500)
 
 
 

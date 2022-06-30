@@ -3,10 +3,9 @@ import pandas as pd
 import pathlib as path
 from common_import import raw_dir, data_dir,tab_dir,fig_dir,cluster_order,write_tex_table,weighted_quantile
 
-fn_clusters = data_dir / 'cluster_data_all_years.parquet'
-pd.set_option('display.max_columns', 500)
-pd.set_option('display.max_rows', 500)
+
 #Input
+fn_clusters = data_dir / 'cluster_data_all_years.parquet'
 df = pd.read_parquet(fn_clusters)
 #Output
 fn_table_out = tab_dir/"tableD4.tex"
