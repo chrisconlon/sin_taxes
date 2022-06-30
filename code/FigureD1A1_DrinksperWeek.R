@@ -34,25 +34,40 @@ get_percentiles<-function(df2,var){
 }
 
 make_long <- function(df2){
-  df2 %>% pivot_longer(!median_income, names_to = "variable", values_to = "value") %>%
-    filter(variable!="avg_log" & variable!="stdev")
+  df2 %>% pivot_longer(!median_income, names_to = "Quantiles", values_to = "value") %>%
+    filter(Quantiles!="avg_log" & Quantiles!="stdev")
 }
 
 # Everything on the same plot
-quantile_plot <- function(data, label ,log_scale=TRUE)
+quantile_plot <- function(data, label ,log_scale=TRUE,use_bw = TRUE)
 {
-  p<-ggplot(data , aes(median_income,value, col=variable)) +
-    scale_color_manual(values=c("avg" = "black","50%"="hotpink4","75%"="#BF80FF","90%"="#00AFBB","95%"="#E7B800", "99%"="#FC4E07"))+
-    #scale_x_continuous(trans='log2')+
+  if (use_bw){
+  p<-ggplot(data , aes(median_income,value, col=Quantiles)) +
+    scale_colour_grey()+
     geom_point() + 
-    geom_line() +
+    geom_line(aes(linetype = Quantiles)) +
     theme_minimal()+
+    #theme_bw()+
     ggtitle(label)+
-    #theme( legend.position = "none")+
+    theme( legend.position = "none")+
     theme(plot.title = element_text(hjust = 0.5))+
     ylab('')+
-    xlab('Household Income')+
+    xlab('Household Income')
     labs(colour = "Quantiles")
+  }
+  else{
+    p<-ggplot(data , aes(median_income,value, col=Quantiles)) +
+      scale_color_manual(values=c("avg" = "black","50%"="hotpink4","75%"="#BF80FF","90%"="#00AFBB","95%"="#E7B800", "99%"="#FC4E07"))+
+      geom_point() + 
+      geom_line() +
+      theme_minimal()+
+      ggtitle(label)+
+      #theme( legend.position = "none")+
+      theme(plot.title = element_text(hjust = 0.5))+
+      ylab('')+
+      xlab('Household Income')+
+      labs(colour = "Quantiles")
+  }
   if(log_scale) { p<- p + scale_y_continuous(trans = 'log10',limits=c(1,1400), breaks=c(1,10,100,1000))}
   else{p<- p + scale_y_continuous(breaks=c(0,50,100,150,200,250))}
   p
@@ -78,7 +93,7 @@ combined2 <- combined %>% make_long()
 
 tobacco <- get_percentiles(df,'cigarette_tax')
 tobacco2 <- tobacco %>% make_long() %>% 
-          filter(variable!="50%"& variable!="75%") %>%
+          filter(Quantiles!="50%"& Quantiles!="75%") %>%
           mutate(value = replace(value, value <1, NA))
 
 alcohol <- get_percentiles(df,'alcohol_tax')
