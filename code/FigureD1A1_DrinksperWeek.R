@@ -43,9 +43,10 @@ quantile_plot <- function(data, label ,log_scale=TRUE,use_bw = TRUE)
 {
   if (use_bw){
   p<-ggplot(data , aes(median_income,value, col=Quantiles)) +
-    scale_colour_grey()+
-    geom_point() + 
-    geom_line(aes(linetype = Quantiles)) +
+    scale_color_manual(values=c("avg" = "black","50%"="gray","75%"="black","90%"="gray","95%"="black", "99%"="gray"))+
+    geom_point(aes(shape=Quantiles)) +
+    scale_shape_manual(values=c("avg" = 15,"50%"=19,"75%"=17,"90%"=17,"95%"=19, "99%"=15))+
+    geom_line() +
     theme_minimal()+
     #theme_bw()+
     ggtitle(label)+
@@ -106,7 +107,7 @@ ethanol <- get_percentiles(df,'drinks_per_week')
 ethanol2 <- ethanol %>% make_long()
 
 # Drinks Per week Plot
-quantile_plot(ethanol2,'',FALSE)+
+quantile_plot(ethanol2,'',FALSE,TRUE)+
   scale_y_continuous(breaks=c(0,5,10,20,30,40))+
   theme(legend.position="bottom")+
   ylab('Drinks Per Adult Per Week')
