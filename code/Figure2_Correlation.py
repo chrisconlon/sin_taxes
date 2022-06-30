@@ -54,4 +54,3 @@ out_df['income'] = np.corrcoef(df[cols+['median_income']],rowvar=False)[0:-1,-1]
 
 plot_income(spearman * (mask==0) + y.transpose(), out_df[['income']], r"Upper Tail Dependence $q=0.9$",r"Spearman Rank Correlation")
 plt.savefig(fig_dir/'figure2.pdf', bbox_inches='tight')
-

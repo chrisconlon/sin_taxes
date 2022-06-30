@@ -13,7 +13,6 @@ initialize_plot()
 df = pd.read_parquet(data_dir/'panel_data_all_years.parquet')
 df['alcohol_tax'] = df['beer_tax'] + df['spirits_tax'] +df['wine_tax']
 
-
 # Top Figure
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20,10))
 sin_labels=draw_cdf(df, ax1, ax2, taxes=False, use_bw=black_white)
