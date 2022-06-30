@@ -2,11 +2,9 @@ import numpy as np
 import pandas as pd
 import pathlib as path
 
-from sklearn.cluster import KMeans
-from scipy.stats import zscore
-from common_import import raw_dir, data_dir
-from cluster_helpers import fit_only, predict_only, fit_all_years, high, medium, low, calc_external_damage
-
+from common_import import data_dir
+from cluster_helpers import (fit_only, predict_only, fit_all_years,
+ 	calc_external_damage, high, medium, low)
 
 # Inputs
 fn_panel = data_dir / 'panel_data_all_years.parquet'
@@ -24,15 +22,17 @@ df2 = pd.concat([fit_all_years(fn_panel, y)[0] for y in range(2007,2020+1)], ign
 
 # Save both cluster assignments
 df3=pd.merge(df, 
-	df2[['household_code','panel_year','clusters']].rename(columns={'clusters':'cluster_by_year'}),
+	df2[['household_code','panel_year','clusters']]\
+	.rename(columns={'clusters':'cluster_by_year'}),
 	on=['household_code','panel_year'])
+
 df4=pd.merge(df3,
 	df3.query('panel_year==2018')[['household_code','clusters']]\
 	.rename(columns={'clusters':'cluster_2018'})
 	,on='household_code',how='left')
 
-df4['externality_med'] =calc_external_damage(df['ethanol']/df['Adult'],**medium)
-df4['externality_high']=calc_external_damage(df['ethanol']/df['Adult'],**high)
-df4['externality_low'] =calc_external_damage(df['ethanol']/df['Adult'],**low)
+df4['externality_med']  = calc_external_damage(df['ethanol']/df['Adult'],**medium)
+df4['externality_high'] = calc_external_damage(df['ethanol']/df['Adult'],**high)
+df4['externality_low']  = calc_external_damage(df['ethanol']/df['Adult'],**low)
 
 df4.to_parquet(fn_clusters)
