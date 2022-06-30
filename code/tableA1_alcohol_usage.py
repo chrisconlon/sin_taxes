@@ -36,6 +36,7 @@ from_panel1.append(df_panel['drinks_per_week_per_capita'].max())
 print("Household",from_panel)
 print("Per capita",from_panel1)
 
+# Link for these numbers
 NESARC = [0,0,0,0.01,0.07,.32,1.10,3.17,7.76,37.49]
 per_cap = from_panel1
 hh = from_panel

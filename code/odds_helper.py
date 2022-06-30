@@ -8,11 +8,6 @@ def style_positive(value):
 def style_negative(value):
 	return bool_matrix_lw.applymap(lambda x: 'cellcolor:[HTML]{E4717A}' if x else '')
 
-def style_positive_bw(value):
-	return bool_matrix_up.applymap(lambda x: 'cellcolor:[HTML]{C0C0C0}' if x else '')
-
-def style_negative_bw(value):
-	return bool_matrix_lw.applymap(lambda x: 'cellcolor:[HTML]{979797}' if x else '')
 
 def char_odd_ratio(df,c):	
 	fnl = pd.DataFrame()
