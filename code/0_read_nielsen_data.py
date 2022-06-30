@@ -9,8 +9,8 @@ from kiltsreader import PanelReader
 ## This uses > 100GB of RAM: processing fewer years or categories at once advised on a smaller computer
 # takes only 3-5 min on my iMac --> saving is slow
 
-# modify these
-in_dir = pathlib.Path('/Volumes/T7/nielsen-panelist')
+# Point this to the Kilts Nielsen data
+kilts_dir = pathlib.Path('/Volumes/T7/nielsen-panelist')
 
 # out files
 fn_out_prods = data_dir / 'revision_products.parquet'
@@ -22,7 +22,7 @@ out_dir = data_dir / "purchases"
 out_dir.mkdir(exist_ok=True)
 
 
-nr = PanelReader(in_dir)
+nr = PanelReader(kilts_dir)
 nr.filter_years(keep=range(2007, 2020+1))
 nr.read_products(keep_groups=[2510,5003,4510,507,1503,5001,4507,5002,1020,1508,2006])
 nr.read_extra()
@@ -35,7 +35,6 @@ nr.process_open_issues()
 nr.df_panelists = nr.df_panelists.drop(columns=['Male_Head_Birth_revised', 'Female_Head_Birth_revised'])
 
 # Write the data partitioned by panel_year (so we can partially read in later)
-#nr.write_data(data_dir, stub='revision',as_table=True, separator='panel_year')
 nr.df_products.to_parquet(fn_out_prods, compression='brotli')
 nr.df_panelists.to_parquet(fn_out_panelists, compression='brotli')
 
@@ -45,13 +44,3 @@ purch_cols = ['trip_code_uc','household_code','upc','upc_ver_uc','quantity','tot
 pa.concat_tables([tab.select(purch_cols) for tab in nr.df_purchases])\
 	.to_pandas()\
 	.to_parquet(fn_out_purchases, compression='brotli')
-
-# Save with parquet.dataset format -- this is fast but reading is complicated
-# Would be totally unnecessary except so much data for so many years
-# Something broke this and it is now unstable (!!)
-#save_schema=nr.df_purchases[0].select(purch_cols).schema
-#new_part = ds.partitioning(pa.schema([("panel_year", pa.int16())]), flavor=None)
-#write_options = ds.ParquetFileFormat().make_write_options(allow_truncated_timestamps=True)
-#ds.write_dataset(nr.df_purchases, base_dir=out_dir, basename_template='purchases{i}.parquet',
-#	 format="parquet", schema=save_schema, partitioning=new_part,
-#	 existing_data_behavior='delete_matching', file_options=write_options)

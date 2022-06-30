@@ -31,48 +31,8 @@ df4=pd.merge(df3,
 	.rename(columns={'clusters':'cluster_2018'})
 	,on='household_code',how='left')
 
-
 df4['externality_med'] =calc_external_damage(df['ethanol']/df['Adult'],**medium)
 df4['externality_high']=calc_external_damage(df['ethanol']/df['Adult'],**high)
 df4['externality_low'] =calc_external_damage(df['ethanol']/df['Adult'],**low)
 
 df4.to_parquet(fn_clusters)
-
-
-def stable_metric(Y1, Y2, df3):
-	new_col_name = 'cluster_'+str(Y2)
-	df4=pd.merge(df3,
-	df3.query('panel_year==@Y2')[['household_code','clusters']]\
-	.rename(columns={'clusters':new_col_name})
-	,on='household_code',how='left')
-
-	print("dropping ",df4[new_col_name].isna().sum()/df4.shape[0])
-
-	# Junk at end
-	x=pd.crosstab(df4.clusters, df4[new_col_name])
-	y=x.sum()/x.sum().sum()
-	print(np.dot(np.diag((100.*x.div(x.sum(axis=1),axis=0))),y))
-
-	print("Start!")
-
-	x2=pd.crosstab(df4.query('panel_year==@Y1').clusters, df4.query('panel_year==@Y1')[new_col_name])
-	print((100.*x2.div(x2.sum(axis=0), axis=1)).round(2))
-	print((100.*x2.div(x2.sum(axis=1), axis=0)).round(2))
-
-# stable_metric(2019,2020,df3)
-
-# # Junk at end
-# 	x=pd.crosstab(df4.clusters, df4.cluster_2018)
-# 	y=x.sum()/x.sum().sum()
-# 	print(np.dot(np.diag((100.*x.div(x.sum(axis=1),axis=0))),y))
-
-# 	print("Start!")
-# 	print((100.*x.div(x.sum(axis=1),axis=0)).round(2))
-# 	df_pivot= df3.pivot('household_code', columns='panel_year',values='clusters')
-
-
-# 	x2=pd.crosstab(df4.query('panel_year==2007').clusters, df4.query('panel_year==2007').cluster_2018)
-# 	print((100.*x2.div(x2.sum(axis=1),axis=0)).round(2))
-
-# 	x2=pd.crosstab(df4.query('panel_year==2007').clusters, df4.query('panel_year==2019').clusters)
-# 	print((100.*x2.div(x2.sum(axis=1),axis=0)).round(2))

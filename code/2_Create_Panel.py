@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from common_import import raw_dir, data_dir,tax_dir
-from helper_functions import hh_consumption, prep_product_data, hh_cols, remove_outlier, tax_per_hh, get_ethanol_totals
+from data_helper import hh_consumption, prep_product_data, hh_cols, remove_outlier, tax_per_hh, get_ethanol_totals
 
 #  Inputs
 fn_bins =  raw_dir /'nielsen_income_bins.xlsx'
