@@ -45,8 +45,8 @@ my_zeros = (spearman !=0)*0
 y=my_zeros.copy()
 z=my_zeros.copy()
 for k in combinations(cols,2):
-    y.loc[k[1],k[0]]=empirical(df[list(k)]).UTDC(0.9) 
-    z.loc[k[1],k[0]]=empirical(df[list(k)]).UTDC(0.95)
+    y.loc[k[1],k[0]]=empirical.empirical(df[list(k)]).UTDC(0.9) 
+    z.loc[k[1],k[0]]=empirical.empirical(df[list(k)]).UTDC(0.95)
 
 out_df = kendall+y.transpose()
 out_df['income'] = np.corrcoef(df[cols+['median_income']],rowvar=False)[0:-1,-1]

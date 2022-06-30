@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import pathlib as path
 from common_import import raw_dir, data_dir,tab_dir, cluster_order, write_tex_table
-from odds_helper import add_them_all, add_them_all1, bootstrap
+from odds_helper import add_them_all, add_them_all1, bootstrap, style_positive_bw, style_negative_bw
 
 #input
 df = pd.read_parquet( data_dir / 'cluster_data_all_years.parquet').query("panel_year == 2018")
