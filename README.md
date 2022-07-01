@@ -58,11 +58,6 @@ nielsen_income_bins.xlsx: mapping from NielsenIQ income bin to income levels
 state_alcohol_rates.xlsx: Tax Policy Center panel of state excise taxes.
 state_cigarette_rates_5.xlsx Tax Policy Center panel of state excise taxes.
 
-manager_consolidations.csv: lists consolidated manager numbers: several manager actually correspond to one
-permno_drops.csv: lists dropped permno IDs with reasons why they are dropped
-big4.csv: lists manager Numbers for Blackrock, Fidelity, State Street, and Vanguard
-The markups from from DLEU 2020 can be reproduced by running the replication package:
-
 
 ### File of origin for tables and figures
 
@@ -76,6 +71,7 @@ The markups from from DLEU 2020 can be reproduced by running the replication pac
 | Table A1     | ```tableA1_alcohol_usage.py```      |
 | Table A2     | ```tableA2_ethanol_per_capita.py```    |
 | Table A3     | ```tableA3_tobacco_useage.py```  |
+| Figure A1    | ```FigureD1A1_DrinksperWeek.R```  |
 | Table B2     | ```tableB2_state_taxes.py```     |
 | Table D1     | ```tableD1_tax_burden_by_inc.py```     |
 | Table D2     | ```tableD2_sin_tax_by_Race.py```      |
@@ -84,8 +80,10 @@ The markups from from DLEU 2020 can be reproduced by running the replication pac
 | Table D5       | ```table2_odds_ratio.py```        |
 | Table D6     | ```tableD6multiNM.py```     |
 | Table D7      | ```table2_odds_ratio.py```        |
+| Figure D1    | ```FigureD1A1_DrinksperWeek.R```  |
 | Table E1     | ```tableE1E2_Other_Cluster_Number.py```     |
 | Table E2     | ```tableE1E2_Other_Cluster_Number.py```     |
+
 
 
 
