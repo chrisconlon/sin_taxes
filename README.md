@@ -35,6 +35,7 @@ Change to the directory labeled ```code``` and run "./run_all.sh" on the termina
     cd code
     ./runall.sh
 
+6. After the files numbered 0\_ through 3\_, the remaining files that generate tables and figures can be run in any order.
 
 ### Kilts/NielsenIQ Data
 - We cannot include the Kilts/NielsenIQ data directly in this package but information on acquiring the data for academic researchers is available at [https://www.chicagobooth.edu/research/kilts/datasets/nielseniq-nielsen](https://www.chicagobooth.edu/research/kilts/datasets/nielseniq-nielsen)
