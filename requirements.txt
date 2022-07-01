@@ -9,4 +9,5 @@ scipy==1.7.3
 seaborn==0.11.2
 statsmodels==0.13.2
 brotli==1.0.9
+Jinja2==3.1.2
 git+git://github.com/chrisconlon/kiltsnielsen#egg=kiltsnielsen
