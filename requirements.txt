@@ -7,6 +7,6 @@ pyreadstat==1.1.7
 scikit_learn==1.1.1
 scipy==1.7.3
 seaborn==0.11.2
-statsmodels==0.12.0rc0+19.g1659994b7
+statsmodels==0.13.2
 brotli==1.0.9
 git+git://github.com/chrisconlon/kiltsnielsen#egg=kiltsnielsen

@@ -30,12 +30,14 @@ git clone https://github.com/chrisconlon/sin_taxes
 
 5. How to run the code
 
-Change to the directory labeled ```code``` and run "./run_all.sh" on the terminal. The code should take approximately 3-10 hours to run. Tables and figures will be produced as described below.
+Change to the directory labeled ```code``` and run "./run_all.sh" on the terminal. The code should take approximately 20 minutes to run. Tables and figures will be produced as described below.
 
     cd code
     ./runall.sh
 
 6. After the files numbered 0\_ through 3\_, the remaining files that generate tables and figures can be run in any order.
+
+7. Memory Requirements: 0_read_nielsen_data.py is designed for speed not for memory usage. It can use over 32GB of RAM. You may want to separately process year by year to conserve memory. Comments are provided in the code. The remaining files use neglible amounts of memory.
 
 ### Kilts/NielsenIQ Data
 - We cannot include the Kilts/NielsenIQ data directly in this package but information on acquiring the data for academic researchers is available at [https://www.chicagobooth.edu/research/kilts/datasets/nielseniq-nielsen](https://www.chicagobooth.edu/research/kilts/datasets/nielseniq-nielsen)
