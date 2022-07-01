@@ -5,6 +5,9 @@ import re
 import pathlib as path
 from common_import import raw_dir, data_dir,tab_dir,fig_dir,wine_abv,beer_abv,liquor_abv,write_tex_table
 
+# On-premise shares reported in the final column are from Admas Media Inc (2019). 
+#NIAAA data are from https://pubs.niaaa.nih.gov/publications/surveillance115/CONS18.htm.19 
+#and Census data can be found at https://fred.stlouisfed.org/series/TTLHH25.
 
 def grouped_weighted_avg(values, weights, by):
 	return (values * weights).groupby(by).sum() / weights.groupby(by).sum()
