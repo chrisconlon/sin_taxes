@@ -20,7 +20,9 @@ python tableD2_sin_tax_by_Race.py
 python tableD4_tax_inc_ratio.py
 python tableD6multiNM.py
 python tableE1E2_Other_Cluster_Number.py
+Rscript tableD3_Regression.R
 
 # These can be run in any order
 python Figure1_cdfs.py
 python Figure2_Correlation.py
+Rscript FigureD1A1_DrinksperWeek.R
